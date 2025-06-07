@@ -77,16 +77,9 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get("/debug-listings-populate", async (req, res) => {
-    try {
-        const listings = await Listing.find({}).limit(5).populate("reviews");
-        res.json(listings);
-    } catch (err) {
-        console.error("Error during populate:", err);
-        res.status(500).send("Populate failed");
-    }
-});
-
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+})
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
