@@ -1,0 +1,109 @@
+<% layout("/layouts/boilerplate") %>
+    <div class="container-sm">
+        <div id="filters">
+            <a href="/listings/filter/trending">
+                <div class="filter">
+                    <div><i class="fa-solid fa-fire"></i></div>
+                    <p>Trending</p>
+                </div>
+            </a>
+            <a href="/listings/filter/room">
+                <div class="filter">
+                    <div><i class="fa-solid fa-bed"></i></div>
+                    <p>Rooms</p>
+                </div>
+            </a>
+            <a href="/listings/filter/iconic_city">
+                <div class="filter">
+                    <div><i class="fa-solid fa-mountain-city"></i></div>
+                    <p>Iconic Cities</p>
+                </div>
+            </a>
+            <a href="/listings/filter/mountain">
+                <div class="filter">
+                    <div><i class="fa-solid fa-mountain"></i></div>
+                    <p>Mountains</p>
+                </div>
+            </a>
+            <a href="/listings/filter/castle">
+                <div class="filter">
+                    <div><i class="fa-brands fa-fort-awesome"></i></div>
+                    <p>Castles</p>
+                </div>
+            </a>
+            <a href="/listings/filter/amazing_pool">
+                <div class="filter">
+                    <div><i class="fa-solid fa-person-swimming"></i></div>
+                    <p>Amazing Pools</p>
+                </div>
+            </a>
+            <a href="/listings/filter/camping">
+                <div class="filter">
+                    <div><i class="fa-solid fa-tent"></i></div>
+                    <p>Camping</p>
+                </div>
+            </a>
+            <a href="/listings/filter/farm">
+                <div class="filter">
+                    <div><i class="fa-solid fa-tractor"></i></div>
+                    <p>Farms</p>
+                </div>
+            </a>
+            <a href="/listings/filter/artic">
+                <div class="filter">
+                    <div><i class="fa-solid fa-snowflake"></i></div>
+                    <p>Artic</p>
+                </div>
+            </a>
+            <a href="/listings/filter/dome">
+                <div class="filter">
+                    <div><i class="fa-solid fa-igloo"></i></div>
+                    <p>Dome</p>
+                </div>
+            </a>
+            <a href="/listings/filter/boat">
+                <div class="filter">
+                    <div><i class="fa-solid fa-ship"></i></div>
+                    <p>Boats</p>
+                </div>
+            </a>
+            <div class="tax-toggle" id="tax-toggle-box">
+                <div class="form-check form-switch">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                </div>
+            </div>
+        </div>
+    </div>
+    <% if(allListings.length){ %>
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+            <% for(let listing of allListings) {%>
+                <a href="/listings/<%= listing._id %>" class="listing-link">
+                    <div class="card col listing-card">
+                        <img src="<%= listing.image.url %>" class="card-img-top" style="height: 20rem;"
+                            alt="listing-img">
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <b>
+                                    <%= listing.title %>
+                                </b>
+                                <span class="float-end">
+                                    <%= listing.avgRating %>&star;
+                                </span>
+                                <br>
+                                &#8377;
+                                <span class="price-without-tax">
+                                    <%= listing.price.toLocaleString("en-IN") %>
+                                </span>
+                                <span class="price-with-tax">
+                                    <%= (listing.price * 1.18).toLocaleString("en-IN") %>
+                                </span>
+                                /night
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+        </div>
+        <% } %>

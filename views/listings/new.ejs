@@ -1,0 +1,104 @@
+<% layout("/layouts/boilerplate") %>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+            <h3>Create a new listing : </h3>
+            <form method="post" action="/listings" class="needs-validation" enctype="multipart/form-data" novalidate>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input name="title" placeholder="Enter title" class="form-control" type="text" required>
+                    <div class="invalid-feedback">
+                        Title name should be valid.
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="description" placeholder="Enter description" class="form-control" type="text"
+                        required></textarea>
+                    <div class="invalid-feedback">
+                        Please enter a short description.
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="image" class="form-label">Upload Listing Image</label>
+                        <input name="image" class="form-control" type="file" required>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="category[]" class="form-label">Select Your Property Category</label>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle small" type="button"
+                                id="dropdownMenuClickable" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                Select Categories
+                            </button>
+                            <ul class="dropdown-menu p-2 shadow"
+                                style="max-height: 250px; overflow-y: auto; font-size: 0.85rem;">
+                                <% const categories=["trending", "room" , "iconic_city" , "mountain" , "castle"
+                                    , "amazing_pool" , "camping" , "farm" , "artic" , "dome" , "boat" ]; %>
+                                    <% categories.forEach(cat=> { %>
+                                        <li>
+                                            <label class="dropdown-item d-flex align-items-center gap-2">
+                                                <input class="form-check-input category-checkbox" type="checkbox"
+                                                    name="category[]" value="<%= cat %>">
+                                                <%= cat.split('_').map(w=> w.charAt(0).toUpperCase() +
+                                                    w.slice(1)).join(' ') %>
+                                            </label>
+                                        </li>
+                                        <% }) %>
+                            </ul>
+                            <div id="selected-categories" class="mt-2 small text-muted"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="price" class="form-label">Price</label>
+                        <input name="price" placeholder="Enter price" class="form-control" required>
+                        <div class="invalid-feedback">
+                            Price should be valid.
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-8">
+                        <label for="country" class="form-label">Country</label>
+                        <input name="country" placeholder="Enter country" class="form-control" type="text" required>
+                        <div class="invalid-feedback">
+                            Country name should be valid.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+
+                    <label for="location" class="form-label">Location</label>
+                    <input name="location" placeholder="Enter location" class="form-control" type="text" required>
+                    <div class="invalid-feedback">
+                        Location should be valid.
+                    </div>
+                </div>
+
+                <button class="btn btn-dark add-btn mt-3">Add</button><br><br>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('.category-checkbox');
+            const dropdownBtn = document.getElementById('dropdownMenuClickable');
+            const selectedDisplay = document.getElementById('selected-categories');
+
+            function updateSelection() {
+                const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.nextSibling.textContent.trim());
+                if (selected.length > 0) {
+                    dropdownBtn.innerText = `${selected.length} Selected`;
+                    selectedDisplay.innerHTML = `<strong>Selected:</strong> ${selected.join(', ')}`;
+                } else {
+                    dropdownBtn.innerText = 'Select Categories';
+                    selectedDisplay.innerHTML = '';
+                }
+            }
+
+            checkboxes.forEach(cb => cb.addEventListener('change', updateSelection));
+        });
+    </script>
