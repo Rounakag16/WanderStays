@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
 const initData = require("./data");
-const MONGO_URL = "mongodb://localhost:27017/WanderStays";
 const Listing = require("../models/listing");
 
-mongoose.connect(MONGO_URL)
+mongoose.connect(process.env.ATLAS_DB)
     .then(() => console.log("Mongodb Connected"))
     .catch(err => console.log(err));
 
